@@ -80,13 +80,7 @@ blocks:
       jobs:
         - name: "\U0001F50D Run Test coverage"
           commands:
-            - source venv/bin/activate
-            - echo "Running code linting..."
-            - echo "Linting passed successfully!"
-        - name: "\U0001F4CA Type Check"
-          commands:
-            - echo "Running type checks..."
-            - echo "Type checking passed successfully!"
+            - echo "Running Test coverage."
   - name: "\U0001F510 Security testing"
     dependencies:
       - "\U0001F310 E2E Tests"
@@ -94,21 +88,15 @@ blocks:
       jobs:
         - name: "\U0001F6E1️ Run Security test"
           commands:
-            - source venv/bin/activate
-            - echo "Scanning dependencies..."
-            - echo "Running security checks..."
-            - python ../4-e2e/app.py
+            - echo "Running security test..."
   - name: "\U0001F4E6 Performance testing"
     dependencies:
       - "\U0001F310 E2E Tests"
     task:
       jobs:
-        - name: "\U0001F528 Build Production"
+        - name: Run Performance test
           commands:
-            - source venv/bin/activate
-            - echo "Building production assets..."
-            - echo "Optimizing build..."
-            - echo "Build completed successfully!"
+            - echo "Run Performance test"
   - name: "\U0001F680 Test reports"
     dependencies:
       - ✨ Test coverage
@@ -116,10 +104,6 @@ blocks:
       - "\U0001F510 Security testing"
     task:
       jobs:
-        - name: "\U0001F30D Create report"
+        - name: "\U0001F30D Create test report"
           commands:
-            - source venv/bin/activate
-            - echo "Preparing deployment..."
-            - echo "Running deployment checks..."
-            - echo "Deploying to production..."
-            - echo "Deployment completed successfully!"
+            - echo "Create test report"

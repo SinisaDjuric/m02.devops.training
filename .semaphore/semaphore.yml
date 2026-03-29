@@ -16,6 +16,9 @@ global_job_config:
   prologue:
     commands:
       - sem-version python 3.12
+      - apt install python3.12-venv
+      - python --version
+      - pip --version
       - mkdir -p .pip_cache
       - python -m venv venv
 blocks:

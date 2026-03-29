@@ -15,6 +15,7 @@ auto_cancel:
 global_job_config:
   prologue:
     commands:
+      - checkout
       - sem-version python 3.12
       - mkdir -p .pip_cache
 blocks:

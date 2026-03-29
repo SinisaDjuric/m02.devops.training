@@ -64,12 +64,19 @@ blocks:
       - "\U0001F50D Integration Tests"
     task:
       jobs:
+        - name: "\U0001F3AD Run E2E app"
+          commands:
+            - echo "Starting test environment..."
+            - cache restore
+            - cd 4-e2e && pip install -r requirements.txt
+            - nohup python app.py &
+            - sleep 3
         - name: "\U0001F3AD Run E2E test"
           commands:
             - echo "Starting test environment..."
             - cache restore
             - cd 4-e2e && pip install -r requirements.txt
-            - nohup python app.py && sleep 3 && python -m pytest test_e2e.py -v
+            - sleep 3 && python -m pytest test_e2e.py -v
   - name: ✨ Test coverage
     dependencies:
       - "\U0001F310 E2E Tests"

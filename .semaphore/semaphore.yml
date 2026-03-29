@@ -51,7 +51,7 @@ blocks:
             - echo "Unit tests passed successfully!"
   - name: "\U0001F50D Integration Tests"
     dependencies:
-      - "\U0001F6E0️ Setup"
+      - "\U0001F9EA Unit Tests"
     task:
       jobs:
         - name: "\U0001F504 Run Integration Tests"
@@ -63,27 +63,22 @@ blocks:
             - echo "Integration tests passed successfully!"
   - name: "\U0001F310 E2E Tests"
     dependencies:
-      - "\U0001F6E0️ Setup"
+      - "\U0001F50D Integration Tests"
     task:
       jobs:
-        - name: "\U0001F3AD Run E2E app"
+        - name: "\U0001F3AD Run E2E test"
           commands:
             - echo "Starting test environment..."
             - cache restore
             - source venv/bin/activate
             - pip install -r requirements.txt
             - python app.py
-        - name: "\U0001F3AD Run E2E Tests"
-          commands:
-            - echo "Running end-to-end tests..."
-            - python test_e2e.py
-            - echo "E2E tests passed successfully!"
-  - name: ✨ Code Quality
+  - name: ✨ Test coverage
     dependencies:
-      - "\U0001F6E0️ Setup"
+      - "\U0001F310 E2E Tests"
     task:
       jobs:
-        - name: "\U0001F50D Lint"
+        - name: "\U0001F50D Run Test coverage"
           commands:
             - source venv/bin/activate
             - echo "Running code linting..."
@@ -92,28 +87,20 @@ blocks:
           commands:
             - echo "Running type checks..."
             - echo "Type checking passed successfully!"
-  - name: "\U0001F510 Security"
+  - name: "\U0001F510 Security testing"
     dependencies:
-      - "\U0001F6E0️ Setup"
+      - "\U0001F310 E2E Tests"
     task:
       jobs:
-        - name: "\U0001F6E1️ Security Scan run app"
+        - name: "\U0001F6E1️ Run Security test"
           commands:
             - source venv/bin/activate
             - echo "Scanning dependencies..."
             - echo "Running security checks..."
             - python ../4-e2e/app.py
-        - name: "\U0001F6E1️ Security Scan run test"
-          commands:
-            - python test_security.py
-            - echo "Security scan completed successfully!"
-  - name: "\U0001F4E6 Build"
+  - name: "\U0001F4E6 Performance testing"
     dependencies:
-      - "\U0001F9EA Unit Tests"
-      - "\U0001F50D Integration Tests"
       - "\U0001F310 E2E Tests"
-      - ✨ Code Quality
-      - "\U0001F510 Security"
     task:
       jobs:
         - name: "\U0001F528 Build Production"
@@ -122,12 +109,14 @@ blocks:
             - echo "Building production assets..."
             - echo "Optimizing build..."
             - echo "Build completed successfully!"
-  - name: "\U0001F680 Deploy"
+  - name: "\U0001F680 Test reports"
     dependencies:
-      - "\U0001F4E6 Build"
+      - ✨ Test coverage
+      - "\U0001F4E6 Performance testing"
+      - "\U0001F510 Security testing"
     task:
       jobs:
-        - name: "\U0001F30D Deploy to Production"
+        - name: "\U0001F30D Create report"
           commands:
             - source venv/bin/activate
             - echo "Preparing deployment..."

@@ -56,8 +56,8 @@ blocks:
             - echo "Setting up test database..."
             - echo "Running integration tests..."
             - cd 3-integration-testing && python -m pytest test_integration.py -v
-            - cd 6-mocking && python -m pytest test_weather_service.py -v
-            - cd 10-database-testing && python -m pytest test_database.py -v
+            - cd ../6-mocking && python -m pytest test_weather_service.py -v
+            - cd ../10-database-testing && python -m pytest test_database.py -v
             - echo "Integration tests passed successfully!"
   - name: "\U0001F310 E2E Tests"
     dependencies:

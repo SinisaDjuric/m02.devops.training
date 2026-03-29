@@ -15,8 +15,12 @@ auto_cancel:
 global_job_config:
   prologue:
     commands:
+      - sudo apt update
+      - sudo apt upgrade
+      - sudo apt install -f
+      - sudo dpkg --configure -a
       - sem-version python 3.12
-      - apt install python3.12-venv
+      - sudo apt install python3.12-venv
       - python --version
       - pip --version
       - mkdir -p .pip_cache

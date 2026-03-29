@@ -38,8 +38,10 @@ blocks:
       jobs:
         - name: "\U0001F7E2 Run Unit Tests"
           commands:
+            - cache restore
             - echo "Running unit test suite..."
-            - python test_math_sum.py
+            - cd 1-tdd && python -m pytest test_factorial.py -v
+            - cd 2-unit-testing && python -m pytest test_math_sum.py -v
             - echo "Unit tests passed successfully!"
   - name: "\U0001F50D Integration Tests"
     dependencies:
@@ -48,9 +50,12 @@ blocks:
       jobs:
         - name: "\U0001F504 Run Integration Tests"
           commands:
+            - cache restore
             - echo "Setting up test database..."
             - echo "Running integration tests..."
-            - python test_integration.py
+            - cd 3-integration-testing && python -m pytest test_integration.py -v
+            - cd 6-mocking && python -m pytest test_weather_service.py -v
+            - cd 10-database-testing && python -m pytest test_database.py -v
             - echo "Integration tests passed successfully!"
   - name: "\U0001F310 E2E Tests"
     dependencies:
@@ -62,7 +67,9 @@ blocks:
             - echo "Starting test environment..."
             - cache restore
             - pip install -r requirements.txt
-            - python app.py
+            - cd 4-e2e && nohup python app.py &
+            - sleep 3
+            - python -m pytest test_e2e.py -v
   - name: ✨ Test coverage
     dependencies:
       - "\U0001F310 E2E Tests"

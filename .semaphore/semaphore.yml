@@ -28,7 +28,6 @@ blocks:
             - echo "Checking out code..."
             - checkout
             - echo "Installing project dependencies..."
-            - source venv/bin/activate
             - pip install pytest requests flask coverage locust
             - echo "Setup completed successfully!"
             - cache store
@@ -39,7 +38,6 @@ blocks:
       jobs:
         - name: "\U0001F7E2 Run Unit Tests"
           commands:
-            - source venv/bin/activate
             - echo "Running unit test suite..."
             - python test_math_sum.py
             - echo "Unit tests passed successfully!"
@@ -50,7 +48,6 @@ blocks:
       jobs:
         - name: "\U0001F504 Run Integration Tests"
           commands:
-            - source venv/bin/activate
             - echo "Setting up test database..."
             - echo "Running integration tests..."
             - python test_integration.py
@@ -64,7 +61,6 @@ blocks:
           commands:
             - echo "Starting test environment..."
             - cache restore
-            - source venv/bin/activate
             - pip install -r requirements.txt
             - python app.py
   - name: ✨ Test coverage

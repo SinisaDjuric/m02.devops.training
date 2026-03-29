@@ -17,7 +17,7 @@ global_job_config:
     commands:
       - sem-version python 3.12
       - sudo apt-get update
-      - sudo apt-get install -y python3.12-venv
+      - sudo apt-get install -y python-venv
       - sudo dpkg --configure -a
       - python --version
       - pip --version

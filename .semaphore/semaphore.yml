@@ -69,10 +69,7 @@ blocks:
             - echo "Starting test environment..."
             - cache restore
             - cd 4-e2e && pip install -r requirements.txt
-            - nohup python app.py &
-            - sleep 3
-            - pip install pytest requests flask coverage locust
-            - python -m pytest test_e2e.py -v
+            - nohup python app.py && sleep 3 && python -m pytest test_e2e.py -v
   - name: ✨ Test coverage
     dependencies:
       - "\U0001F310 E2E Tests"

@@ -18,7 +18,6 @@ global_job_config:
       - sudo apt update
       - sudo dpkg --configure -a
       - sem-version python 3.12
-      - sudo apt install python3.12-venv
       - python --version
       - pip --version
       - mkdir -p .pip_cache

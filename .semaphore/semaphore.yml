@@ -2,8 +2,8 @@ version: v1.0
 name: "\U0001F31F Fan-In/Fan-Out Pipeline"
 agent:
   machine:
-    type: f1-standard-2
-    os_image: ubuntu2404
+    type: f1-standard-4
+    os_image: ubuntu2204
 fail_fast:
   stop:
     when: branch != 'main'
@@ -18,7 +18,6 @@ global_job_config:
       - sudo apt update
       - sudo dpkg --configure -a
       - sem-version python 3.12
-      - sudo apt install python3.12-venv
       - python --version
       - pip --version
       - mkdir -p .pip_cache

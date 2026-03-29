@@ -16,8 +16,6 @@ global_job_config:
   prologue:
     commands:
       - sudo apt update
-      - sudo apt upgrade
-      - sudo apt install -f
       - sudo dpkg --configure -a
       - sem-version python 3.12
       - sudo apt install python3.12-venv

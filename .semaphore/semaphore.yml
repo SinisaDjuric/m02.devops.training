@@ -86,27 +86,6 @@ blocks:
             - pip install coverage
             - coverage run -m pytest test_calculator.py -v
             - coverage report -m
-  - name: "\U0001F510 Security testing"
-    dependencies:
-      - "\U0001F310 E2E Tests"
-    task:
-      jobs:
-        - name: "\U0001F6E1️ Run Security test"
-          commands:
-            - echo "Running security test..."
-            - '# Install dependencies'
-            - cd 4-e2e
-            - pip install -r requirements.txt
-            - pip install flask_limiter
-            - cd ..
-            - cd 9-security-testing
-            - 'python -c "import sys; sys.path.insert(0, ''''../4-e2e''''); from app import app; app.run()" > flask.log 2>&1 &'
-            - '# wait until app is ready - running state'
-            - APP_PID=$!
-            - 'until curl -s http://127.0.0.1:5000/health; do sleep 1; done'
-            - python -m pytest test_security.py -v
-            - '# Kill Flask app after test'
-            - kill $APP_PID
   - name: "\U0001F4E6 Performance testing"
     dependencies:
       - "\U0001F310 E2E Tests"
@@ -130,6 +109,27 @@ blocks:
             - 'until curl -s http://127.0.0.1:5000/health; do sleep 1; done'
             - '# Run Locust (this will block until finished)'
             - 'locust -f locustfile.py --host=http://127.0.0.1:5000 --headless -u 10 -r 2 --run-time 30s'
+            - '# Kill Flask app after test'
+            - kill $APP_PID
+  - name: "\U0001F510 Security testing"
+    dependencies:
+      - "\U0001F4E6 Performance testing"
+    task:
+      jobs:
+        - name: "\U0001F6E1️ Run Security test"
+          commands:
+            - echo "Running security test..."
+            - '# Install dependencies'
+            - cd 4-e2e
+            - pip install -r requirements.txt
+            - pip install flask_limiter
+            - cd ..
+            - cd 9-security-testing
+            - 'python -c "import sys; sys.path.insert(0, ''''../4-e2e''''); from app import app; app.run()" > flask.log 2>&1 &'
+            - '# wait until app is ready - running state'
+            - APP_PID=$!
+            - 'until curl -s http://127.0.0.1:5000/health; do sleep 1; done'
+            - python -m pytest test_security.py -v
             - '# Kill Flask app after test'
             - kill $APP_PID
   - name: "\U0001F680 Test reports"

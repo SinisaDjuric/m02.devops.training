@@ -102,7 +102,6 @@ blocks:
         - name: Run Performance test
           commands:
             - echo "Run Performance test"
-            - pip install -r requirements.txt
             - pip install flask_limiter
             - pip install locust
             - cd 8-performance-testing

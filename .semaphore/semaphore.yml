@@ -101,13 +101,24 @@ blocks:
       jobs:
         - name: Run Performance test
           commands:
-            - echo "Run Performance test"
+            - 'set -e  # fail fast if anything breaks'
+            - '#export DISABLE_RATE_LIMIT=1'
+            - '# Install dependencies'
+            - cd 4-e2e
+            - pip install -r requirements.txt
             - pip install flask_limiter
-            - pip install locust
+            - cd ..
             - cd 8-performance-testing
-            - 'nohup python -c "import sys; sys.path.insert(0, ''../4-e2e''); from app import app; app.run()" &'
+            - pip install locust
+            - '# Start Flask app in background'
+            - 'python -c "import sys; sys.path.insert(0, ''../4-e2e''); from app import app; app.run()" > flask.log 2>&1 &'
+            - APP_PID=$!
             - '# wait until app is ready - running state'
             - 'until curl -s http://127.0.0.1:5000/health; do sleep 1; done'
+            - '# Run Locust (this will block until finished)'
+            - 'locust -f locustfile.py --host=http://127.0.0.1:5000 --headless -u 10 -r 2 --run-time 30s'
+            - '# Kill Flask app after test'
+            - kill $APP_PID
   - name: "\U0001F680 Test reports"
     dependencies:
       - ✨ Test coverage

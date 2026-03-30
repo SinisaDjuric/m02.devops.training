@@ -12,7 +12,7 @@ history = []
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=["1000 per second"]
+    default_limits=["100 per minute"]
 )
 
 @app.errorhandler(429)
@@ -93,7 +93,7 @@ def health():
 
 
 @app.route("/add", methods=["POST"])
-@limiter.limit("10 per minute")
+@limiter.limit("100 per second")
 def add():
     data, error = parse_json()
     if error:
@@ -108,7 +108,7 @@ def add():
 
 
 @app.route("/subtract", methods=["POST"])
-@limiter.limit("10 per minute")
+@limiter.limit("100 per second")
 def subtract():
     data, error = parse_json()
     if error:
@@ -123,7 +123,7 @@ def subtract():
 
 
 @app.route("/multiply", methods=["POST"])
-@limiter.limit("10 per minute")
+@limiter.limit("100 per seconde")
 def multiply():
     data, error = parse_json()
     if error:
@@ -138,7 +138,7 @@ def multiply():
 
 
 @app.route("/divide", methods=["POST"])
-@limiter.limit("5 per minute")
+@limiter.limit("100 per second")
 def divide():
     data, error = parse_json()
     if error:
@@ -157,7 +157,7 @@ def divide():
 
 
 @app.route("/history", methods=["GET"])
-@limiter.limit("20 per minute")
+@limiter.limit("100 per second")
 def get_history():
     return jsonify(history)
 

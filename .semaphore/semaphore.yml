@@ -101,7 +101,7 @@ blocks:
       jobs:
         - name: Run Performance test
           commands:
-            - echo "Run Performance test"
+            - echo "Run Performance test "
   - name: "\U0001F680 Test reports"
     dependencies:
       - ✨ Test coverage

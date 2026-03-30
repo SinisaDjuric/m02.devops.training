@@ -12,7 +12,7 @@ history = []
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=["100 per minute"]
+    default_limits=["1000 per second"]
 )
 
 @app.errorhandler(429)

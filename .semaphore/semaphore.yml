@@ -101,7 +101,12 @@ blocks:
       jobs:
         - name: Run Performance test
           commands:
-            - echo "Run Performance test "
+            - echo "Run Performance test"
+            - pip install locust
+            - cd 8-performance-testing
+            - 'nohup python -c "import sys; sys.path.insert(0, ''../4-e2e''); from app import app; app.run()" &'
+            - '# wait until app is ready - running state'
+            - 'until curl -s http://127.0.0.1:5000/health; do sleep 1; done'
   - name: "\U0001F680 Test reports"
     dependencies:
       - ✨ Test coverage

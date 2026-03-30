@@ -102,6 +102,8 @@ blocks:
         - name: Run Performance test
           commands:
             - echo "Run Performance test"
+            - pip install -r requirements.txt
+            - pip install flask_limiter
             - pip install locust
             - cd 8-performance-testing
             - 'nohup python -c "import sys; sys.path.insert(0, ''../4-e2e''); from app import app; app.run()" &'
